@@ -18,5 +18,7 @@ if you are activated terminal will look something like
 # install requirements.txt
 pip install -r requirements.txt
 
+# Run flask
+python app.py
 
 
