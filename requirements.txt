@@ -1,0 +1,21 @@
+flask
+flask-socketio
+flask-RESTful
+flask-JWT
+psycopg2-binary
+# uwsgi
+flask-JWT_Extended
+flask-cors
+mysql-connector
+pymysql
+flask-SQLAlchemy
+gunicorn
+eventlet
+flask_marshmallow
+marshmallow-sqlalchemy
+requests
+flask-migrate
+Flask-OAuthlib
+OAuth2
+python-dotenv
+stripe
