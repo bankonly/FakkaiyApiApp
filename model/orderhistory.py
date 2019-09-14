@@ -8,8 +8,8 @@ class OrderHistoryModel(db.Model):
     quantity = db.Column(db.Integer,nullable=False)
     flaskSaleStatus = db.Column(db.Boolean,default=False)
 
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
 
     orderId = db.Column(db.String(80),db.ForeignKey('orders.orderId')) #userid + time()
     order = db.relationship('OrderModel')

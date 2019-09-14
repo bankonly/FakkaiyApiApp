@@ -1,31 +1,69 @@
-from schema.brand import BrandModel,BrandSchema
-from resources.module import Resource
+from schema.brand import BrandModel, BrandSchema
 from resources.module import (
-    req,gettex,db,jwt_required,get_jwt_claims,IsAdminMiddleware as Middleware
+    req, gettex, db, IsAdminMiddleware, reqparse,Resource,uuid4
 )
 
+parser = reqparse.RequestParser()
+parser.add_argument('brandName', required=True)
+
+
 class BrandResource(Resource):
-    
+
     @classmethod
-    @Middleware.PermissionMiddleware
+    @IsAdminMiddleware.PermissionMiddleware
     def get(cls):
         brand = BrandModel.fetchAll()
         return BrandSchema(many=True).dump(brand)
 
     @classmethod
-    @jwt_required
+    @IsAdminMiddleware.PermissionMiddleware
     def post(cls):
-        user = get_jwt_claims()
-        if user['role']:
-            dataBody = req.get_json()
-            brand = BrandSchema().load(dataBody,session=db.session)
+        dataBody = parser.parse_args()
+        brand = BrandSchema().load(dataBody, session=db.session)
 
-            isExist = BrandModel.findByBrandName(dataBody['brandName'])
-            if isExist is not None:
-                return gettex('EXIST'),404
-            
+        isExist = bool(BrandModel.findByBrandName(dataBody.brandName))
+        if isExist:
+            return gettex('EXIST'), 422
+        try:
             brand.insert()
-            return BrandSchema().dump(brand)
-        
-        return gettex('DENIAL'),401
+        except:
+            return gettex('SOMETHING_WRONG'),500
 
+        return BrandSchema().dump(brand)
+
+class AbsBrandResource(Resource):
+
+    @IsAdminMiddleware.PermissionMiddleware
+    def get(self,brandid):
+        data = BrandModel.findById(brandid)
+        if data is None:
+            return gettex('NOT_FOUND'),404
+        
+        return BrandSchema().dump(data)
+
+    @IsAdminMiddleware.PermissionMiddleware
+    def put(self,brandid):
+        value = parser.parse_args()
+        data = BrandModel.findById(brandid)
+        dataName = BrandModel.findByBrandName(value.brandName)
+
+        if data is None:
+            return gettex('NOT_FOUND'),404
+            
+        data.brandName = value.brandName
+        try:
+            data.insert()
+        except:
+            return gettex('SOMETHING_WRONG'),500
+
+        return BrandSchema().dump(data)
+    
+    @IsAdminMiddleware.PermissionMiddleware
+    def delete(self,brandid):
+        data = BrandModel.findById(brandid)
+        if data is None:
+            return gettex('NOT_FOUND'),404
+        
+        data.delete()
+        return BrandSchema().dump(data)
+    

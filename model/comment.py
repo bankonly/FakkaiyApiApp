@@ -12,8 +12,8 @@ class CommentModel(db.Model):
     userId = db.Column(db.String(50),db.ForeignKey('users.userId'))
     proId = db.Column(db.String(50),db.ForeignKey('products.proId'))
 
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
     
     user = db.relationship('UserModel')
     product = db.relationship(ProductModel)

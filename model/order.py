@@ -6,10 +6,11 @@ class OrderModel(db.Model):
 
     orderId = db.Column(db.String(80),primary_key=True) #userid + time() + 
 
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
 
     userId = db.Column(db.String(50),db.ForeignKey('users.userId'))
+    user = db.relationship('UserModel')
 
     @classmethod
     def fetchAll(cls):

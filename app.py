@@ -13,7 +13,10 @@ def before_first_request():
     db.create_all()
 
 
-
+@app.route('/test')
+def test():
+    return 'Dont Bring it'
+    
 
 
 

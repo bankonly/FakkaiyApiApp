@@ -11,8 +11,8 @@ class ProfileModel(db.Model):
     location = db.Column(db.Text,nullable=True)
     avatar = db.Column(db.Text,nullable=True)
     
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
 
     userId = db.Column(db.String(50),db.ForeignKey('users.userId'))
     user = db.relationship('UserModel')

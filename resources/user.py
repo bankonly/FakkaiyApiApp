@@ -9,17 +9,18 @@ class UserResource(Resource):
     @classmethod
     @jwt_required
     def get(cls):
-        # return get_jwt_claims()
         user = UserModel.fetchAll()
         return UserSchema(many=True).dump(user)
 
     def post(self):
         value = req.get_json()
+        value.update({'userId':uuid4().hex})
         user = UserSchema().load(value,session=db.session)
-        isEmail = UserModel.findByEmail(user.email)
-        isName = UserModel.findByName(user.name)
-        if isEmail is not None or isName is not None:
-            return gettex('EXIST'),400
+        isEmail = bool(UserModel.findByEmail(user.email))
+        isName = bool(UserModel.findByName(user.name))
+        
+        if isEmail or isName:
+            return gettex('EXIST'),422
         try:
             user.insert()
         except:
@@ -32,10 +33,15 @@ class UserResource(Resource):
         userid = get_jwt_claims()['userId']
         value = req.get_json()
         user = UserModel.findById(userid)
-        if user is None:
+        if not bool(user):
             return gettex('NOT_FOUND'),400
-        user.name = value['name']
-        user.insert()
+            
+        try:
+            user.name = value['name']
+            user.insert()
+        except:
+            return gettex('SOMETHING_WRONG'),500
+
         return UserSchema().dump(user)
 
 class InheritUserResource(UserResource):

@@ -17,9 +17,11 @@ api.add_resource(ProfileResource,'/api/profile')
 
 # BrandResource 
 api.add_resource(BrandResource,'/api/brand')
+api.add_resource(AbsBrandResource,'/api/brand/<brandid>')
 
 # CatagoryResource 
 api.add_resource(CatagoryResource,'/api/catagories')
+api.add_resource(AbsCatagoryResource,'/api/catagories/<catid>')
 
 # CommentResource 
 api.add_resource(CommentResource,'/api/comment')
@@ -35,5 +37,6 @@ api.add_resource(ProductResource,'/api/product')
 
 # StoreResource 
 api.add_resource(StoreResource,'/api/store')
+api.add_resource(AbsStoreResource,'/api/store/<storeid>')
 
 

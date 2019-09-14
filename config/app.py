@@ -10,6 +10,7 @@ from flask_restful import Api
 from flask_jwt_extended import *
 from flask_socketio import SocketIO
 from flask_marshmallow import Marshmallow
+from uuid import uuid4
 
 
 

@@ -1,15 +1,15 @@
 from config.db import db
 from time import time
-from uuid import uuid4
-
+from config.app import uuid4
+from helper.defaultfunc import DefaultFunc
 class BrandModel(db.Model):
     __tablename__ = 'brands'
 
-    brandId = db.Column(db.String(80),primary_key=True,nullable=False,default=uuid4().hex)
+    brandId = db.Column(db.String(80),primary_key=True,nullable=False,default=DefaultFunc.generateId)
     brandName = db.Column(db.String(50),nullable=False)
 
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
 
     @classmethod
     def fetchAll(cls):

@@ -1,14 +1,15 @@
 from config.db import db
 from time import time
+from helper.defaultfunc import DefaultFunc
 
 class CatagoryModel(db.Model):
     __tablename__ = 'catagories'
 
-    catId = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    catId = db.Column(db.String(80),primary_key=True,nullable=False,default=DefaultFunc.generateId)
     catName = db.Column(db.String(50),nullable=False)
     
-    createDate = db.Column(db.BigInteger,default=int(time()))
-    updateDate = db.Column(db.BigInteger,onupdate=int(time()))
+    createDate = db.Column(db.BigInteger,default=time)
+    updateDate = db.Column(db.BigInteger,onupdate=time)
 
     @classmethod
     def fetchAll(cls):
