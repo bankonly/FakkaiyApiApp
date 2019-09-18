@@ -15,6 +15,7 @@ class StoreModel(db.Model):
 
     userId = db.Column(db.String(50),db.ForeignKey('users.userId'))
     user = db.relationship('UserModel')
+    product = db.relationship('ProductModel',lazy="dynamic",cascade="all ,delete-orphan")
 
     @classmethod
     def fetchAll(cls):
@@ -29,9 +30,13 @@ class StoreModel(db.Model):
         return cls.query.filter_by(storeId=storeid).first()
 
     @classmethod
-    def findByUserId(cls,userid) -> bool:
-        return cls.query.filter_by(userId=userid).count() >= 5
+    def findByUserId(cls,userid):
+        return cls.query.filter_by(userId=userid).first()
     
+    @classmethod
+    def isLimit(cls,userid) -> bool:
+        return cls.query.filter_by(userId=userid).count() >= 5
+
     @classmethod
     def findByStoreName(cls,storename):
         return cls.query.filter_by(storeName=storename).first()

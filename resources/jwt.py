@@ -3,6 +3,7 @@ from flask import request
 from schema.user import UserSchema
 @jwt.user_claims_loader
 def user_claims_loader(user_claims):
+    request.user = user_claims
     return user_claims
 
 @jwt.token_in_blacklist_loader

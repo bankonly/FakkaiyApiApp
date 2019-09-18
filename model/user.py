@@ -3,7 +3,8 @@ from model.profile import ProfileModel
 from config.app import uuid4
 from time import time
 from helper.defaultfunc import DefaultFunc
-
+from model.products import ProductModel
+from model.order import OrderModel
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -18,6 +19,8 @@ class UserModel(db.Model):
     updateDate = db.Column(db.BigInteger,onupdate=time)
 
     profile = db.relationship(ProfileModel,lazy="dynamic",cascade="all ,delete-orphan")
+    product = db.relationship(ProductModel,lazy="dynamic",cascade="all ,delete-orphan")
+    order = db.relationship(OrderModel,lazy='subquery',cascade="all ,delete-orphan")
 
     @classmethod
     def fetchAll(cls):

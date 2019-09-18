@@ -35,6 +35,7 @@ class AbsBrandResource(Resource):
 
     @IsAdminMiddleware.PermissionMiddleware
     def get(self,brandid):
+        
         data = BrandModel.findById(brandid)
         if data is None:
             return gettex('NOT_FOUND'),404
@@ -43,6 +44,7 @@ class AbsBrandResource(Resource):
 
     @IsAdminMiddleware.PermissionMiddleware
     def put(self,brandid):
+
         value = parser.parse_args()
         data = BrandModel.findById(brandid)
         dataName = BrandModel.findByBrandName(value.brandName)

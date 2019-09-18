@@ -28,12 +28,15 @@ api.add_resource(CommentResource,'/api/comment')
 
 # OrderResource 
 api.add_resource(OrderResource,'/api/order')
+api.add_resource(AbsOrderResource,'/api/order/<orderid>')
 
 # OrderHistoryResource 
 api.add_resource(OrderHistoryResource,'/api/orderhistory')
+api.add_resource(AbsOrderHistoryResource,'/api/orderhistory/<orderid>')
 
 # ProductResource 
 api.add_resource(ProductResource,'/api/product')
+api.add_resource(AbsProductResource,'/api/product/<productid>')
 
 # StoreResource 
 api.add_resource(StoreResource,'/api/store')

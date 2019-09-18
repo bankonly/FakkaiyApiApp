@@ -9,6 +9,7 @@ from resources.module import (
 class StoreResource(Resource):
     
     @classmethod
+    @jwt_required
     def get(cls):
         data = StoreModel.fetchAll()
         return StoreSchema(many=True).dump(data)
@@ -21,7 +22,7 @@ class StoreResource(Resource):
         try:
             isExist = StoreModel.findByStoreName(data['storeName'])
             user = UserModel.findById(data['userId'])
-            islimit = StoreModel.findByUserId(data['userId'])
+            islimit = StoreModel.isLimit(data['userId'])
         except:
             return gettex('SOMETHING_WRONG'),500
         
@@ -48,11 +49,11 @@ class AbsStoreResource(Resource):
 
     @jwt_required
     def get(cls,storeid):
-        data = StoreModel.findByStoreId(storeid)
+        store = StoreModel.findByStoreId(storeid)
         if not bool(store):
             return gettex('NOT_FOUND'),404
         
-        return StoreSchema().dump(data)
+        return StoreSchema().dump(store)
     
     @jwt_required
     def put(cls,storeid):

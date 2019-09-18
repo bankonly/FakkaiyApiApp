@@ -11,6 +11,8 @@ class CatagoryModel(db.Model):
     createDate = db.Column(db.BigInteger,default=time)
     updateDate = db.Column(db.BigInteger,onupdate=time)
 
+    product = db.relationship('ProductModel',lazy="dynamic")
+
     @classmethod
     def fetchAll(cls):
         return cls.query.all()

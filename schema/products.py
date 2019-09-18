@@ -5,3 +5,4 @@ class ProductSchema(ma.ModelSchema):
     class Meta:
         model = ProductModel
         include_fk = True
+        load_only = ('user',)

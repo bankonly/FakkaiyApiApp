@@ -66,6 +66,7 @@ class InheritUserResource(UserResource):
             
         return UserSchema().dump(user)
 
+    @classmethod
     def put(self,userid):
         pass
 

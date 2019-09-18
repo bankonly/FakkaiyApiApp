@@ -1,6 +1,5 @@
 from config.app import jwt_required,get_jwt_claims
 from config.strings import gettex
-from config.app import jwt_required,get_jwt_claims
 
 
 class IsAdminMiddleware:
