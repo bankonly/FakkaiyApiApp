@@ -6,7 +6,7 @@ class OrderModel(db.Model):
     __tablename__ = 'orders'
 
     orderId = db.Column(db.String(80),primary_key=True) #userid + time() + 
-
+    inOrederStatus = db.Column(db.Boolean,default=True)
     createDate = db.Column(db.BigInteger,default=time)
     updateDate = db.Column(db.BigInteger,onupdate=time)
 

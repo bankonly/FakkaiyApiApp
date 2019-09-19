@@ -11,8 +11,8 @@ class OrderHistoryModel(db.Model):
     createDate = db.Column(db.BigInteger,default=time)
     updateDate = db.Column(db.BigInteger,onupdate=time)
 
-    orderId = db.Column(db.String(80),db.ForeignKey('orders.orderId')) #userid + time()
-    proId = db.Column(db.String(80),db.ForeignKey('products.proId')) #userid + time()
+    orderId = db.Column(db.String(80),db.ForeignKey('orders.orderId')) 
+    proId = db.Column(db.String(80),db.ForeignKey('products.proId')) 
     
     order = db.relationship('OrderModel')
     product = db.relationship('ProductModel')
@@ -32,6 +32,10 @@ class OrderHistoryModel(db.Model):
     @classmethod
     def fetchByProId(cls,proid):
         return cls.query.filter_by(proId=proid).all()
+    
+    def insertMany(self,value):
+        db.session.insert().values(value)
+        db.session.commit()
 
     def insert(self):
         db.session.add(self)

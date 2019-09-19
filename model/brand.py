@@ -10,7 +10,7 @@ class BrandModel(db.Model):
 
     createDate = db.Column(db.BigInteger,default=time)
     updateDate = db.Column(db.BigInteger,onupdate=time)
-
+    
     product = db.relationship('ProductModel',lazy="dynamic")
 
     @classmethod
