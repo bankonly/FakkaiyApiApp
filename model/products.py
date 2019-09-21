@@ -34,8 +34,8 @@ class ProductModel(db.Model):
     orderhistory = db.relationship(OrderHistoryModel,lazy="dynamic",cascade="all ,delete-orphan")
     
     @classmethod
-    def newProid(cls,authorid): 
-        return f"PROD_{cls.findSerial()}_{int(time())}_{authorid}"
+    def newProid(cls,authorid,serialNumber): 
+        return f"PROD_{serialNumber}_{int(time())}_{authorid}"
     @classmethod
     def findSerial(cls):
         return cls.query.count()
@@ -59,6 +59,11 @@ class ProductModel(db.Model):
     @classmethod
     def findByStoreId(cls,storeid):
         return cls.query.filter_by(storeId=storeid).all()    
+
+    @classmethod
+    def insertMany(cls,value):
+        db.session.add_all(value)
+        db.session.commit()
 
     def insert(self):
         db.session.add(self)

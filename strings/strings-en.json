@@ -6,5 +6,6 @@
     "NOT_EXIST":"Not Exist",
     "SOMETHING_WRONG":"Something wrong , please try again",
     "DENIAL":"Permission denial",
-    "LIMITED":"Limited"
+    "LIMITED":"Limited",
+    "NOTALLOWEDFILE":"File type is not allowed"
 }

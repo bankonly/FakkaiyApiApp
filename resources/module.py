@@ -1,6 +1,6 @@
 from flask_restful import Resource,reqparse
 from config.strings import gettex
-from flask import request as req
+from flask import request as req,jsonify
 from time import time
 from uuid import uuid4
 from config.db import db

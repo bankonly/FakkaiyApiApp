@@ -14,73 +14,61 @@ class ProductResource(Resource):
     cat = CatagoryModel
     store = StoreModel
     
-    @classmethod
     @UserMiddleware.userDetail
-    def get(cls):
-        data = cls.model.fetchAll()
-        return cls.schema(many=True).dump(data)
+    def get(self):
+        data = self.model.fetchAll()
+        return self.schema(many=True).dump(data)
 
-    @classmethod
     @UserMiddleware.userDetail
-    def post(cls):
+    def post(self):
 
-        value = req.get_json()
-        product = cls.schema().load(value,partial=('proId',))
-        isUserId = bool(value.get('userId'))
-        isStoreId = bool(value.get('storeId'))
+        vl = req.get_json()
+        isUserId = bool(vl[0].get('userId'))
+        isStoreId = bool(vl[0].get('storeId'))
 
-        if not bool(value.get('catId')):
-            return gettex('NOT_FOUND'),404
-
-        isCatId = cls.cat.findById(value['catId'])
-        if not bool(isCatId):
-            return gettex('NOT_FOUND'),404
-
-        if isUserId:
-            userid = value['userId']
-            isExistUserId = bool(cls.user.findById(userid))
-            proId = cls.model.newProid(userid)
-            islimit = cls.model.isLimit(userid) 
-
+        if isStoreId:
+            authorId = vl[0]['storeId']
+            isExistStoreId = self.store.findByStoreId(authorId)
+            if not bool(isExistStoreId):
+                return gettex('NOT_FOUND'),404
+        else:
+            authorId = vl[0]['userId']
+            isExistUserId = bool(self.user.findById(authorId))
+            islimit = self.model.isLimit(authorId) 
+            
             if not isExistUserId:
                 return gettex('NOT_FOUND'),422
 
             if islimit:
                 return gettex('LIMITED'),401
 
-        if isStoreId:
-            storeid = value['storeId']
-            isExistStoreId = cls.store.findByStoreId(storeid)
-            if not bool(isExistStoreId):
-                return gettex('NOT_FOUND'),404
-
-            proId = cls.model.newProid(storeid)
-
-        value.update({'proId':proId})
-        product = cls.schema().load(value,session=db.session)
-
+        serial = self.model.findSerial()
+        for value in vl:
+            serial += 1
+            proId = self.model.newProid(authorId,serial)
+            value.update({'proId':proId})
+        
+        product = self.schema(many=True).load(vl,session=db.session)
         try:
-            product.insert()
+            self.model.insertMany(product)
         except:
             return gettex('SOMETHING_WRONG'),500
 
-        return cls.schema().dump(product)
+        return gettex('SUCCESS'),201
 
 class AbsProductResource(ProductResource):
 
-    @classmethod
     @UserMiddleware.userDetail
-    def get(cls,productid):
-        product = cls.model.findByProId(productid)
+    def get(self,productid):
+        product = self.model.findByProId(productid)
         if not bool(product):
             return gettex('NOT_FOUND'),404
         
-        return cls.schema().dump(product)
+        return self.schema().dump(product)
     
-    @classmethod
     @UserMiddleware.userDetail
-    def delete(cls,productid):
-        product = cls.model.findByProId(productid)
+    def delete(self,productid):
+        product = self.model.findByProId(productid)
         if not bool(product):
             return gettex('NOT_FOUND'),404
         
@@ -91,11 +79,10 @@ class AbsProductResource(ProductResource):
         
         return gettex('SUCCESS'),201
         
-    @classmethod
     @UserMiddleware.userDetail
-    def put(cls,productid):
+    def put(self,productid):
         value = req.get_json()
-        product = cls.model.findByProId(productid)
+        product = self.model.findByProId(productid)
         if not bool(product):
             return gettex('NOT_FOUND'),404
 
@@ -110,4 +97,4 @@ class AbsProductResource(ProductResource):
         except:
             return gettex('SOMETHING_WRONG'),500
         
-        return cls.schema().dump(product)
+        return self.schema().dump(product)

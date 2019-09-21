@@ -1,31 +1,20 @@
-from config.app import app,socketio,migrate
+from config.app import socketio,migrate
 from config.ma import ma
 from config.db import db
+
 from route.api import api
+from route.web import app
 import resources.jwt
-from time import time
 from flask import jsonify
 from uuid import uuid4
+from datetime import date,datetime
 
 
-@app.before_first_request
-def before_first_request():
-    db.create_all()
+def run():
+    print(datetime.now())
+    print('5')
 
-
-@app.route('/test')
-def test():
-    return 'Dont Bring it'
-    
-
-
-
-
-
-
-
-
-
+# schedule.add_job(run,'cron',second='2')
 
 if __name__ == "__main__":
 

@@ -11,15 +11,18 @@ from flask_marshmallow import Marshmallow
 from uuid import uuid4
 
 
-
 app = Flask(__name__)
 
 # cors origin allow
 CORS(app)
 
+# file allow
+ALLOWED_TYPE = {'txt','jpg','png','jpeg','gif'}
+
 # load env file
 load_dotenv('.env')
-
+app.config['UPLOAD_FOLDER'] = os.environ.get('IMG_UPLOAD_PATH')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')

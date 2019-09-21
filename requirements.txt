@@ -19,3 +19,4 @@ Flask-OAuthlib
 OAuth2
 python-dotenv
 stripe
+flask_apscheduler

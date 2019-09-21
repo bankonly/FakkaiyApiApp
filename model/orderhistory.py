@@ -33,8 +33,9 @@ class OrderHistoryModel(db.Model):
     def fetchByProId(cls,proid):
         return cls.query.filter_by(proId=proid).all()
     
+    @classmethod
     def insertMany(self,value):
-        db.session.insert().values(value)
+        db.session.add_all(value)
         db.session.commit()
 
     def insert(self):
