@@ -32,7 +32,7 @@ app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access','refresh']
 
 api = Api(app)
 jwt = JWTManager(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app,cors_allowed_origins='*')
 
 
 

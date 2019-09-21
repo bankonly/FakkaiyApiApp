@@ -1,6 +1,8 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
 
+
+schedule = BackgroundScheduler()
+schedule.start()
 
 

@@ -2,19 +2,15 @@ from config.app import socketio,migrate
 from config.ma import ma
 from config.db import db
 
+
 from route.api import api
-from route.web import app
+from route.web import app,runfuncs,schedule
 import resources.jwt
 from flask import jsonify
 from uuid import uuid4
 from datetime import date,datetime
 
-
-def run():
-    print(datetime.now())
-    print('5')
-
-# schedule.add_job(run,'cron',second='2')
+# schedule.add_job(func=runfuncs,trigger='cron',second="*/5",id="runschedule")
 
 if __name__ == "__main__":
 
