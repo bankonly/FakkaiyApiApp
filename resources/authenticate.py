@@ -23,7 +23,7 @@ class Authenticate(Resource):
         access_token = create_access_token(identity=user.userId,user_claims=UserSchema().dump(user),fresh=True)
         refresh_token = create_refresh_token(user.userId)
         return {
-            'access_token':f'Bearer {access_token}',
+            'access_token':f'{access_token}',
             'refresh_token':refresh_token
         },201
 
