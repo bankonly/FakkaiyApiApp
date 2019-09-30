@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
+from sqlalchemy.exc import OperationalError
 from config.app import app
-
+from helper.handleexception import HandleExcetion
+from sqlalchemy.orm.exc import UnmappedInstanceError
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -17,3 +19,13 @@ metaconvention = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metaconvention)
 
 migrate = Migrate(app,db,render_as_batch=True)
+
+
+
+@app.errorhandler(OperationalError)
+def handle_http_exception(error):
+    return HandleExcetion.output(error),500
+
+@app.errorhandler(UnmappedInstanceError)
+def handle_http_exception(error):
+    return HandleExcetion.output(error),500

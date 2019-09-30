@@ -1,0 +1,10 @@
+import os
+
+DEBUG = True
+UPLOAD_FOLDER = os.environ['IMG_UPLOAD_PATH']
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root@localhost/fakkhaiyapi"
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SECRET_KEY = os.environ['SECRET_KEY']
+JWT_BLACKLIST_ENABLED = True
+JWT_BLACKLIST_TOKEN_CHECKS = ['access','refresh']

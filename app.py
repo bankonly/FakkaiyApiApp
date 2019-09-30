@@ -2,7 +2,6 @@ from config.app import socketio,migrate
 from config.ma import ma
 from config.db import db
 
-
 from route.api import api
 from route.web import app,runfuncs,schedule
 import resources.jwt
@@ -10,7 +9,6 @@ from flask import jsonify
 from uuid import uuid4
 from datetime import date,datetime
 
-# schedule.add_job(func=runfuncs,trigger='cron',second="*/5",id="runschedule")
 
 if __name__ == "__main__":
 

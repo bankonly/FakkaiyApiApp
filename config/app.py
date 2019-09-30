@@ -9,7 +9,7 @@ from flask_jwt_extended import *
 from flask_socketio import SocketIO
 from flask_marshmallow import Marshmallow
 from uuid import uuid4
-
+from helper.handleexception import HandleExcetion
 
 app = Flask(__name__)
 
@@ -35,4 +35,10 @@ jwt = JWTManager(app)
 socketio = SocketIO(app,cors_allowed_origins='*')
 
 
+@app.errorhandler(TypeError)
+def errorhandler(error):
+    return HandleExcetion.output(error),500
 
+@app.errorhandler(AttributeError)    
+def errorhandler(error):
+    return HandleExcetion.output(error),500

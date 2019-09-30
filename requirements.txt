@@ -20,3 +20,4 @@ OAuth2
 python-dotenv
 stripe
 flask_apscheduler
+flask-uploads
