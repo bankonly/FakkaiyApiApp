@@ -3,7 +3,7 @@ from config.ma import ma
 from config.db import db
 
 from route.api import api
-from route.web import app,runfuncs,schedule
+from route.web import app,schedule
 import resources.jwt
 from flask import jsonify
 from uuid import uuid4
