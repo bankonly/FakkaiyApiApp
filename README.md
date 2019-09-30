@@ -1,24 +1,30 @@
-# Flask-Startup-Folder
+# This is the first time after you clone the python project you should do :
+===============================================
 
-# install virtualenv and you can following code below
-virtualenv env --python=python3.7
+# install on windows 
+1. download the python program 
+2. https://bootstrap.pypa.io/get-pip.py
+3. set path file (C:\Users\Vongkeo\AppData\Local\Programs\Python\Python37-32\Scripts)
+4. pip install virtualenv
+5. .\env\scripts\activate.bat (cmd)
+6. pip install -r requirments.txt  ( Inside the project )
+7. py app.py ( Run app)
 
+===============================================
 
-# activate env
-For Mac: source env/bin/activate
-For Window: .\env\Script\activate.bat
+# Install on MacOS
 
-Hit Enter....
+1. Install  (https://www.python.org/downloads/)
+2. sudo easy_install pip
+3. pip install virtualenv 
+4. jump into the project by terminal run : virtualenv env --python=python3.7
+5. source env/bin/activate
+6. pip install -r requirments.txt ( Inside the project )
+7. python app.py ( Run app)
 
-# make sure you are in env mode
-if you are activated terminal will look something like 
+# Migration 
 
-(env) userexample:
-
-# install requirements.txt
-pip install -r requirements.txt
-
-# Run flask
-python app.py
-
-
+1. flask db init 
+2. flask db migrate 
+3. flask db upgrade
+ 
