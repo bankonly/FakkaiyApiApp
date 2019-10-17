@@ -9,8 +9,12 @@ class UserResource(Resource):
     @classmethod
     @jwt_required
     def get(cls):
+      
         user = UserModel.fetchAll()
-        return UserSchema(many=True).dump(user)
+        alluser = UserSchema(many=True).dump(user)
+        return {
+            'data': alluser[0]
+        }
 
     def post(self):
         value = req.get_json()
